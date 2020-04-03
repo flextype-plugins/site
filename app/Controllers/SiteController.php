@@ -48,7 +48,7 @@ class SiteController extends Container
 
         // If uri is empty then it is main entry else use entry uri
         if ($uri === '/') {
-            $entry_uri = $this->registry->get('flextype.entries.main');
+            $entry_uri = $this->registry->get('plugins.site.settings.entries.main');
         } else {
             $entry_uri = ltrim($uri, '/');
         }
