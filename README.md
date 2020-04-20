@@ -8,14 +8,23 @@ Site plugin to display entries content on the website frontend.
 
 ## Dependencies
 
-The following dependencies need to be installed for Site Plugin.
+The following dependencies need to be downloaded and installed for Site Plugin.
 
 ### System
 
 | Item | Version | Download |
 |---|---|---|
 | [flextype](https://github.com/flextype/flextype) | 0.9.8 | [download](https://github.com/flextype/flextype/releases/download/v0.9.8/flextype-0.9.8.zip) |
+
+### Plugins
+| Item | Version | Download |
+|---|---|---|
 | [twig](https://github.com/flextype-plugins/twig) | 1.0.0 | [download](https://github.com/flextype-plugins/twig/releases/download/v1.0.0/twig-1.0.0.zip) |
+
+### Themes
+| Item | Version | Download |
+|---|---|---|
+| [noir](https://github.com/flextype-plugins/noir) | 1.0.0 | [download](https://github.com/flextype-plugins/noir/releases/download/v1.0.0/noir-1.0.0.zip) |
 
 ## Installation
 
@@ -28,7 +37,7 @@ The following dependencies need to be installed for Site Plugin.
 |---|---|
 | entry | The entry object with all the information about the current page you are currently on. |
 | query | The Query Params |
-| uri | The uri string |
+| uri | The URI string |
 
 ### Examples
 
