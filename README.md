@@ -65,7 +65,7 @@ Information from the currently active theme can get from the `registry` object.
 
 Example information from `/project/themes/noir/theme.yaml`
 
-<div class="file-header"><i class="far fa-file-alt"></i> /project/themes/noir/theme.yaml</div>
+/project/themes/noir/theme.yaml
 ```yaml
 name: Noir
 version: 1.0.0
