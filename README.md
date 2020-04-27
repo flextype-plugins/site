@@ -63,9 +63,9 @@ You can easily access theme configuration and theme information from your Twig a
 
 Information from the currently active theme can get from the `registry` object.
 
-Example information from `/site/themes/default/theme.yaml`
+Example information from `/project/themes/noir/theme.yaml`
 
-<div class="file-header"><i class="far fa-file-alt"></i> /site/themes/default/theme.yaml</div>
+<div class="file-header"><i class="far fa-file-alt"></i> /project/themes/noir/theme.yaml</div>
 ```yaml
 name: Noir
 version: 1.0.0
@@ -84,14 +84,14 @@ You can reach any of these items via `registry.themes` by using the standard dot
 Usage:
 
 ```twig
-Theme name: {{ registry.themes.default.manifest.name }}
-Theme version: {{ registry.themes.default.manifest.version }}
+Theme name: {{ registry.themes.noir.manifest.name }}
+Theme version: {{ registry.themes.noir.manifest.version }}
 ```
 
 Result:
 
 ```twig
-Theme name: Default
+Theme name: Noir
 Theme version: 1.0.0
 ```
 
@@ -100,8 +100,8 @@ You can also reach these same values from a Flextype plugin(s) with PHP syntax:
 Usage:
 
 ```php
-$theme_name = $flextype->registry->get('themes.default.manifest.name');
-$theme_version = $flextype->registry->get('themes.default.manifest.version');
+$theme_name = $flextype->registry->get('themes.noir.manifest.name');
+$theme_version = $flextype->registry->get('themes.noir.manifest.version');
 ```
 
 ### Accessing Theme Configuration
@@ -114,17 +114,17 @@ For example, let us consider the Noir theme and there is a file called `settings
 enabled: true
 ```
 
-Let us add some custom theme settings. Open `/site/config/themes/default/settings.yaml` and add new variable with value `highlight: red`
+Let us add some custom theme settings. Open `/site/config/themes/noir/settings.yaml` and add new variable with value `highlight: red`
 
 ```yaml
 enabled: true
 highlight: red
 ```
 
-Then in your theme templates you can access these variable using the `registry.themes.default` object:
+Then in your theme templates you can access these variable using the `registry.themes.noir` object:
 
 ```twig
-<h1 style="color:{{ registry.themes.default.settings.highlight }}">
+<h1 style="color:{{ registry.themes.noir.settings.highlight }}">
     BUILD FAST, FLEXIBLE, EASIER TO MANAGE WEBSITES WITH FLEXTYPE.
 </h1>
 ```
@@ -137,9 +137,9 @@ Result:
 In PHP you can access the current theme configuration like this:
 
 ```php
-$highlight = $flextype->registry->get('themes.default.settings.highlight');
+$highlight = $flextype->registry->get('themes.noir.settings.highlight');
 ```
 
 ## LICENSE
-[The MIT License (MIT)](https://github.com/flextype-themes/noir/blob/master/LICENSE.txt)
+[The MIT License (MIT)](https://github.com/flextype-plugins/site/blob/master/LICENSE.txt)
 Copyright (c) 2018-2020 [Sergey Romanenko](https://github.com/Awilum)
