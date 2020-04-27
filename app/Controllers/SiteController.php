@@ -92,7 +92,7 @@ class SiteController extends Container
         // Set template path for current entry
         $path = 'themes/' . $this->registry->get('plugins.site.settings.theme') . '/' . (empty($this->entry['template']) ? 'templates/default' : 'templates/' . $this->entry['template']) . '.html';
 
-        if (! Filesystem::has(PATH['site'] . '/' . $path)) {
+        if (! Filesystem::has(PATH['project'] . '/' . $path)) {
             return $response->write("Template not found");
         }
 
