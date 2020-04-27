@@ -65,7 +65,6 @@ Information from the currently active theme can get from the `registry` object.
 
 Example information from `/project/themes/noir/theme.yaml`
 
-/project/themes/noir/theme.yaml
 ```yaml
 name: Noir
 version: 1.0.0
@@ -114,7 +113,9 @@ For example, let us consider the Noir theme and there is a file called `settings
 enabled: true
 ```
 
-Let us add some custom theme settings. Open `/site/config/themes/noir/settings.yaml` and add new variable with value `highlight: red`
+Let us add some custom theme settings.
+
+Open `/site/config/themes/noir/settings.yaml` and add new variable with value `highlight: red`
 
 ```yaml
 enabled: true
