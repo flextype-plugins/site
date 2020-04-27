@@ -29,9 +29,11 @@ The following dependencies need to be downloaded and installed for Site Plugin.
 ## Installation
 
 * Download & Install all required dependencies.
-* Download Admin Panel Plugin and unzip plugin to the folder /site/plugins/
+* Download Admin Panel Plugin and unzip plugin to the folder /project/plugins/
 
-### Twig variables
+## Documentation
+
+### Twig variables for Site Plugin
 
 | Variable | Description |
 |---|---|
@@ -39,12 +41,105 @@ The following dependencies need to be downloaded and installed for Site Plugin.
 | query | The Query Params |
 | uri | The URI string |
 
-### Examples
+#### Examples
 
 ```twig
 {{ entry.title }} {# returns the current entry title #}
 ```
 
+### Theming
+
+#### Theme Installation
+
+1. Unzip theme to the folder `/project/themes/`
+2. Go to `/project/config/settings.yaml` and update `theme` setting with your theme name.
+3. Save your changes.
+
+#### Theme Configuration
+
+You can easily access theme configuration and theme information from your Twig and PHP files.
+
+### Accessing Theme Information
+
+Information from the currently active theme can get from the `registry` object.
+
+Example information from `/site/themes/default/theme.yaml`
+
+<div class="file-header"><i class="far fa-file-alt"></i> /site/themes/default/theme.yaml</div>
+```yaml
+name: Noir
+version: 1.0.0
+description: Noir theme for Flextype
+author:
+  name: Sergey Romanenko
+  email: hello@romanenko.digital
+  url: http://romanenko.digital
+homepage: https://github.com/flextype-themes/noir
+bugs: https://github.com/flextype-themes/noir/issues
+license: MIT
+```
+
+You can reach any of these items via `registry.themes` by using the standard dot-syntax:
+
+Usage:
+
+```twig
+Theme name: {{ registry.themes.default.manifest.name }}
+Theme version: {{ registry.themes.default.manifest.version }}
+```
+
+Result:
+
+```twig
+Theme name: Default
+Theme version: 1.0.0
+```
+
+You can also reach these same values from a Flextype plugin(s) with PHP syntax:
+
+Usage:
+
+```php
+$theme_name = $flextype->registry->get('themes.default.manifest.name');
+$theme_version = $flextype->registry->get('themes.default.manifest.version');
+```
+
+### Accessing Theme Configuration
+
+Themes have default and site configuration files, named `settings.yaml` located in `/project/themes/<themename>/` and in `/project/config/themes/<themename>/`
+
+For example, let us consider the Noir theme and there is a file called `settings.yaml` in the themes site settings folder. The contents of this configuration file look like this:
+
+```yaml
+enabled: true
+```
+
+Let us add some custom theme settings. Open `/site/config/themes/default/settings.yaml` and add new variable with value `highlight: red`
+
+```yaml
+enabled: true
+highlight: red
+```
+
+Then in your theme templates you can access these variable using the `registry.themes.default` object:
+
+```twig
+<h1 style="color:{{ registry.themes.default.settings.highlight }}">
+    BUILD FAST, FLEXIBLE, EASIER TO MANAGE WEBSITES WITH FLEXTYPE.
+</h1>
+```
+
+Result:
+
+<h1 style="color:red">BUILD FAST, FLEXIBLE, EASIER TO MANAGE WEBSITES WITH FLEXTYPE.</h1>
+
+
+In PHP you can access the current theme configuration like this:
+
+```php
+$highlight = $flextype->registry->get('themes.default.settings.highlight');
+```
+
 ## LICENSE
-[The MIT License (MIT)](https://github.com/flextype-plugins/site/blob/master/LICENSE.txt)
+[The MIT License (MIT)](https://github.com/flextype-themes/noir/blob/master/LICENSE.txt)
 Copyright (c) 2018-2020 [Sergey Romanenko](https://github.com/Awilum)
