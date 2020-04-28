@@ -1,7 +1,7 @@
 <h1 align="center">Site Plugin for <a href="http://flextype.org/">Flextype</a></h1>
 
 <p align="center">
-<a href="https://github.com/flextype-plugins/site/releases"><img alt="Version" src="https://img.shields.io/github/release/flextype-plugins/site.svg?label=version"></a> <a href="https://github.com/flextype-plugins/site"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a> <a href="https://github.com/flextype-plugins/site"><img src="https://img.shields.io/github/downloads/flextype-plugins/site/total.svg?colorB=blue" alt="Total downloads"></a> <a href="https://github.com/flextype-plugins/site"><img src="https://img.shields.io/badge/Flextype-0.9.8-green.svg" alt="Flextype"></a> <a href=""><img src="https://img.shields.io/discord/423097982498635778.svg?logo=discord&colorB=728ADA&label=Discord%20Chat" alt="Discord"></a>
+<a href="https://github.com/flextype-plugins/site/releases"><img alt="Version" src="https://img.shields.io/github/release/flextype-plugins/site.svg?label=version&color=black"></a> <a href="https://github.com/flextype-plugins/site"><img src="https://img.shields.io/badge/license-MIT-blue.svg?color=black" alt="License"></a> <a href="https://github.com/flextype-plugins/site"><img src="https://img.shields.io/github/downloads/flextype-plugins/site/total.svg?color=black" alt="Total downloads"></a> <a href="https://github.com/flextype-plugins/site"><img src="https://img.shields.io/badge/Flextype-0.9.8-green.svg?color=black" alt="Flextype"></a> <a href=""><img src="https://img.shields.io/discord/423097982498635778.svg?logo=discord&color=black&label=Discord%20Chat" alt="Discord"></a>
 </p>
 
 Site plugin to display entries content on the website frontend.
@@ -28,8 +28,9 @@ The following dependencies need to be downloaded and installed for Site Plugin.
 
 ## Installation
 
-* Download & Install all required dependencies.
-* Download Admin Panel Plugin and unzip plugin to the folder /project/plugins/
+1. Download & Install all required dependencies.
+2. Create new folder `/project/plugins/site`
+3. Download Site Plugin and unzip plugin content to the folder `/project/plugins/site`
 
 ## Documentation
 
