@@ -71,8 +71,8 @@ version: 1.0.0
 description: Noir theme for Flextype
 author:
   name: Sergey Romanenko
-  email: hello@romanenko.digital
-  url: http://romanenko.digital
+  email: support@flextype.org
+  url: https://flextype.org
 homepage: https://github.com/flextype-themes/noir
 bugs: https://github.com/flextype-themes/noir/issues
 license: MIT
@@ -94,7 +94,7 @@ Theme name: Noir
 Theme version: 1.0.0
 ```
 
-You can also reach these same values from a Flextype plugin(s) with PHP syntax:
+You can also reach these same values from a Flextype theme(s) with PHP syntax:
 
 Usage:
 
@@ -105,7 +105,7 @@ $theme_version = $flextype->registry->get('themes.noir.manifest.version');
 
 ### Accessing Theme Configuration
 
-Themes have default and site configuration files, named `settings.yaml` located in `/project/themes/<themename>/` and in `/project/config/themes/<themename>/`
+Themes have default and project configuration files, named `settings.yaml` located in `/project/themes/<themename>/` and in `/project/config/themes/<themename>/`
 
 For example, let us consider the Noir theme and there is a file called `settings.yaml` in the themes site settings folder. The contents of this configuration file look like this:
 
@@ -115,7 +115,7 @@ enabled: true
 
 Let us add some custom theme settings.
 
-Open `/site/config/themes/noir/settings.yaml` and add new variable with value `highlight: red`
+Open `/project/config/themes/noir/settings.yaml` and add new variable with value `highlight: red`
 
 ```yaml
 enabled: true
@@ -125,7 +125,7 @@ highlight: red
 Then in your theme templates you can access these variable using the `registry.themes.noir` object:
 
 ```twig
-<h1 style="color:{{ registry.themes.noir.settings.highlight }}">
+<h1 style="color:{{ registry.get('themes.noir.settings.highlight') }}">
     BUILD FAST, FLEXIBLE, EASIER TO MANAGE WEBSITES WITH FLEXTYPE.
 </h1>
 ```

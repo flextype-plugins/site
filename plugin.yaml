@@ -5,7 +5,7 @@ icon: fas fa-globe
 author:
   name: Sergey Romanenko
   email: support@flextype.org
-  url: http://flextype.org
+  url: https://flextype.org
 homepage: https://github.com/flextype-plugins/site
 bugs: https://github.com/flextype-plugins/site/issues
 license: MIT
