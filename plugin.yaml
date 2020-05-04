@@ -1,5 +1,5 @@
 name: Site
-version: 1.0.0
+version: 1.0.1
 description: Site plugin to display entries content on the website frontend.
 icon: fas fa-globe
 author:
@@ -12,7 +12,4 @@ license: MIT
 
 dependencies:
   flextype: 0.9.8
-  plugins:
-    twig: 1.0.0
-  themes:
-    noir: 1.0.0
+  twig: '>=1.0.0'
