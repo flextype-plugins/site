@@ -11,4 +11,4 @@ declare(strict_types=1);
 
 namespace Flextype;
 
-$app->get('{uri:.+}', 'SiteController:index')->setName('site.index');
+$app->get('{uri:.+}', 'SiteController:index')->setName('site.index')->add('csrf');
