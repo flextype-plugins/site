@@ -9,7 +9,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Flextype;
+namespace Flextype\Plugin\Site\Controllers;
 
 use Slim\Http\Environment;
 use Slim\Http\Uri;
@@ -17,6 +17,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use function ltrim;
 use Flextype\Component\Filesystem\Filesystem;
+use Flextype\App\Foundation\Container;
 
 class SiteController extends Container
 {
