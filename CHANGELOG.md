@@ -1,3 +1,11 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/flextype-plugins/site/compare/v1.1.0...v1.2.0) (2020-08-06)
+
+### Features
+
+* **core** add Themes functionality
+* **core** add ability to include Theme bootstrap file.
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/flextype-plugins/site/compare/v1.0.2...v1.1.0) (2020-08-05)
 

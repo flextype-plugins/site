@@ -30,6 +30,15 @@ class SiteController extends Container
     public $entry = [];
 
     /**
+     * __construct
+     */
+    public function __construct($flextype, $app)
+    {
+        $this->container = $flextype;
+        $this->app       = $app;
+    }
+
+    /**
      * Index page
      *
      * @param Request  $request  PSR7 request
@@ -93,6 +102,8 @@ class SiteController extends Container
         // Set template path for current entry
         $path = 'themes/' . $this->registry->get('plugins.site.settings.theme') . '/' . (empty($this->entry['template']) ? 'templates/default' : 'templates/' . $this->entry['template']) . '.html';
 
+        self::includeCurrentThemeBootstrap($this->container, $this->app);
+
         if (! Filesystem::has(PATH['project'] . '/' . $path)) {
             return $response->write("Template {$this->entry['template']} not found");
         }
@@ -102,6 +113,15 @@ class SiteController extends Container
         }
 
         return $this->twig->render($response, $path, ['entry' => $this->entry, 'query' => $query, 'uri' => $uri]);
+    }
+
+    private static function includeCurrentThemeBootstrap($flextype, $app)
+    {
+        $bootstrap_path = 'themes/' . $flextype->registry->get('plugins.site.settings.theme') . '/bootstrap.php';
+
+        if (Filesystem::has(PATH['project'] . '/' . $bootstrap_path)) {
+            include_once PATH['project'] . '/' . $bootstrap_path;
+        }
     }
 
     /**
