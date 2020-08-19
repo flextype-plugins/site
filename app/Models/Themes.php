@@ -21,9 +21,9 @@ use function md5;
 class Themes
 {
     /**
-     * Flextype Dependency Container
+     *
      */
-    private $flextype;
+    protected $flextype;
 
     /**
      * Private construct method to enforce singleton behavior.
@@ -38,10 +38,10 @@ class Themes
     /**
      * Init themes
      */
-    public function init($flextype, $app) : void
+    public function init($flextype) : void
     {
         // Set empty themes list item
-        $this->flextype['registry']->set('themes', []);
+        $this->flextype->container('registry')->set('themes', []);
 
         // Get themes list
         $themes_list = $this->getThemes();
@@ -55,8 +55,8 @@ class Themes
         $themes_cache_id = $this->getThemesCacheID($themes_list);
 
         // Get themes list from cache or scan themes folder and create new themes cache item in the registry
-        if ($this->flextype['cache']->contains($themes_cache_id)) {
-            $this->flextype['registry']->set('themes', $this->flextype['cache']->fetch($themes_cache_id));
+        if ($this->flextype->container('cache')->contains($themes_cache_id)) {
+            $this->flextype->container('registry')->set('themes', $this->flextype->container('cache')->fetch($themes_cache_id));
         } else {
             $themes                 = [];
             $themes_settings        = [];
@@ -91,7 +91,7 @@ class Themes
                 if (trim($default_theme_settings_file_content) === '') {
                     $default_theme_settings = [];
                 } else {
-                    $default_theme_settings = $this->flextype['yaml']->decode($default_theme_settings_file_content);
+                    $default_theme_settings = $this->flextype->container('yaml')->decode($default_theme_settings_file_content);
                 }
 
                 // Create custom theme settings file
@@ -102,7 +102,7 @@ class Themes
                 if (trim($custom_theme_settings_file_content) === '') {
                     $custom_theme_settings = [];
                 } else {
-                    $custom_theme_settings = $this->flextype['yaml']->decode($custom_theme_settings_file_content);
+                    $custom_theme_settings = $this->flextype->container('yaml')->decode($custom_theme_settings_file_content);
                 }
 
                 // Check if default theme manifest file exists
@@ -112,7 +112,7 @@ class Themes
 
                 // Get default theme manifest content
                 $default_theme_manifest_file_content = Filesystem::read($default_theme_manifest_file);
-                $default_theme_manifest              = $this->flextype['yaml']->decode($default_theme_manifest_file_content);
+                $default_theme_manifest              = $this->flextype->container('yaml')->decode($default_theme_manifest_file_content);
 
                 // Merge theme settings and manifest data
                 $themes[$theme['dirname']]['manifest'] = $default_theme_manifest;
@@ -121,14 +121,14 @@ class Themes
             }
 
             // Save parsed themes list in the registry themes
-            $this->flextype['registry']->set('themes', $themes);
+            $this->flextype->container('registry')->set('themes', $themes);
 
             // Save parsed themes list in the cache
-            $this->flextype['cache']->save($themes_cache_id, $themes);
+            $this->flextype->container('cache')->save($themes_cache_id, $themes);
         }
 
         // Emit onThemesInitialized
-        $this->flextype['emitter']->emit('onThemesInitialized');
+        $this->flextype->container('emitter')->emit('onThemesInitialized');
     }
 
     /**
