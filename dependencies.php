@@ -17,18 +17,18 @@ use Flextype\Plugin\Site\Models\Themes;
 /**
  * Add themes service to Flextype container
  */
-$flextype['themes'] = static function ($flextype) use ($app) {
-    return new Themes($flextype, $app);
+$flextype->container()['themes'] = static function () use ($flextype) {
+    return new Themes($flextype);
 };
 
 /**
  * Init themes
  */
-$flextype['themes']->init($flextype, $app);
+$flextype->container()['themes']->init($flextype);
 
 /**
  * Add site controller to Flextype container
  */
-$flextype['SiteController'] = static function ($flextype) use ($app) {
-    return new SiteController($flextype, $app);
+$flextype->container()['SiteController'] = static function () use ($flextype) {
+    return new SiteController($flextype);
 };
