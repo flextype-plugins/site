@@ -54,13 +54,13 @@ class SiteController
         }
 
         // Get entry body
-        $entry_body = flextype('entries')->fetch($entry_uri);
+        $entry_body = flextype('entries')->fetchSingle($entry_uri)->toArray();
 
         // is entry not found
         $is_entry_not_found = false;
 
         // If entry body is not false
-        if ($entry_body) {
+        if (is_array($entry_body) and count($entry_body) > 0) {
             // Get 404 page if entry visibility is draft or hidden and if routable is false
             if ((isset($entry_body['visibility']) && ($entry_body['visibility'] === 'draft' || $entry_body['visibility'] === 'hidden')) ||
                 (isset($entry_body['routable']) && ($entry_body['routable'] === false))) {

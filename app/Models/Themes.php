@@ -50,8 +50,8 @@ class Themes
         $themes_cache_id = $this->getThemesCacheID($themes_list);
 
         // Get themes list from cache or scan themes folder and create new themes cache item in the registry
-        if (flextype('cache')->contains($themes_cache_id)) {
-            flextype('registry')->set('themes', flextype('cache')->fetch($themes_cache_id));
+        if (flextype('cache')->has($themes_cache_id)) {
+            flextype('registry')->set('themes', flextype('cache')->get($themes_cache_id));
         } else {
             $themes                 = [];
             $themes_settings        = [];
@@ -119,7 +119,7 @@ class Themes
             flextype('registry')->set('themes', $themes);
 
             // Save parsed themes list in the cache
-            flextype('cache')->save($themes_cache_id, $themes);
+            flextype('cache')->set($themes_cache_id, $themes);
         }
 
         // Emit onThemesInitialized
