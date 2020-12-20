@@ -1,3 +1,10 @@
+<a name="1.6.1"></a>
+# [1.6.1](https://github.com/flextype-plugins/site/compare/v1.6.0...v1.6.1) (2020-12-20)
+
+### Bug Fixes
+
+* **bootstrap** fix and improve bootstrap loading.
+
 <a name="1.6.0"></a>
 # [1.6.0](https://github.com/flextype-plugins/site/compare/v1.5.0...v1.6.0) (2020-12-20)
 
