@@ -32,3 +32,6 @@ flextype()->container()['themes']->init();
 flextype()->container()['SiteController'] = static function () {
     return new SiteController();
 };
+
+$bootstrapPath = PATH['project']. '/themes/' . flextype('registry')->get('plugins.site.settings.theme') . '/bootstrap.php';
+filesystem()->file($bootstrapPath)->exists() and include_once $bootstrapPath;
