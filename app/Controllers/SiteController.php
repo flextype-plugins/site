@@ -54,7 +54,7 @@ class SiteController
         }
 
         // Get entry body
-        $entry_body = flextype('entries')->fetchSingle($entry_uri)->toArray();
+        $entry_body = flextype('entries')->fetch($entry_uri)->toArray();
 
         // is entry not found
         $is_entry_not_found = false;
