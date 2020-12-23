@@ -1,3 +1,10 @@
+<a name="1.7.0"></a>
+# [1.7.0](https://github.com/flextype-plugins/site/compare/v1.6.1...v1.7.0) (2020-12-23)
+
+### Features
+
+* **core** add ability to use variables $args and $request inside templates
+
 <a name="1.6.1"></a>
 # [1.6.1](https://github.com/flextype-plugins/site/compare/v1.6.0...v1.6.1) (2020-12-20)
 

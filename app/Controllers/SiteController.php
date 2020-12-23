@@ -44,7 +44,7 @@ class SiteController
         $uri = $args['uri'];
 
         // Is JSON Format
-        $is_json = isset($query['format']) && $query['format'] === 'json';
+        $isJson = isset($query['format']) && $query['format'] === 'json';
 
         // If uri is empty then it is main entry else use entry uri
         if ($uri === '/') {
@@ -57,7 +57,7 @@ class SiteController
         $entry_body = flextype('entries')->fetch($entry_uri)->toArray();
 
         // is entry not found
-        $is_entry_not_found = false;
+        $isEntryNotFound = false;
 
         // If entry body is not false
         if (is_array($entry_body) and count($entry_body) > 0) {
@@ -65,13 +65,13 @@ class SiteController
             if ((isset($entry_body['visibility']) && ($entry_body['visibility'] === 'draft' || $entry_body['visibility'] === 'hidden')) ||
                 (isset($entry_body['routable']) && ($entry_body['routable'] === false))) {
                 $entry              = $this->error404();
-                $is_entry_not_found = true;
+                $isEntryNotFound = true;
             } else {
                 $entry = $entry_body;
             }
         } else {
             $entry              = $this->error404();
-            $is_entry_not_found = true;
+            $isEntryNotFound = true;
         }
 
         // Set entry
@@ -81,8 +81,8 @@ class SiteController
         flextype('emitter')->emit('onSiteEntryAfterInitialized');
 
         // Return in JSON Format
-        if ($is_json) {
-            if ($is_entry_not_found) {
+        if ($isJson) {
+            if ($isEntryNotFound) {
                 return $response->withJson($this->entry, 404);
             }
 
@@ -96,13 +96,19 @@ class SiteController
             return $response->write("Template {$this->entry['template']} not found");
         }
 
-        if ($is_entry_not_found) {
-            return flextype('twig')->render($response->withStatus(404), $path, ['entry' => $this->entry, 'query' => $query, 'uri' => $uri]);
+        $data = ['entry' => $this->entry,
+                 'query' => $query,
+                 'uri' => $uri,
+                 'args' => $args,
+                 'request' => $request];
+
+        if ($isEntryNotFound) {
+            return flextype('twig')->render($response->withStatus(404), $path, $data);
         }
 
-        return flextype('twig')->render($response, $path, ['entry' => $this->entry, 'query' => $query, 'uri' => $uri]);
+        return flextype('twig')->render($response, $path, $data);
     }
-    
+
     /**
      * Error404 page
      *
