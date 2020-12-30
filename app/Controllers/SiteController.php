@@ -21,14 +21,6 @@ use Flextype\Component\Filesystem\Filesystem;
 class SiteController
 {
     /**
-     * Current entry data array
-     *
-     * @var array
-     * @access private
-     */
-    public $entry = [];
-
-    /**
      * Index page
      *
      * @param Request  $request  PSR7 request
@@ -70,36 +62,28 @@ class SiteController
                 $entry = $entry_body;
             }
         } else {
-            $entry              = $this->error404();
+            $entry           = $this->error404();
             $isEntryNotFound = true;
         }
-
-        // Set entry
-        $this->entry = $entry;
-
-        // Run event onSiteEntryAfterInitialized
-        flextype('emitter')->emit('onSiteEntryAfterInitialized');
 
         // Return in JSON Format
         if ($isJson) {
             if ($isEntryNotFound) {
-                return $response->withJson($this->entry, 404);
+                return $response->withJson($entry, 404);
             }
 
-            return $response->withJson($this->entry);
+            return $response->withJson($entry);
         }
 
         // Set template path for current entry
-        $path = 'themes/' . flextype('registry')->get('plugins.site.settings.theme') . '/' . (empty($this->entry['template']) ? 'templates/default' : 'templates/' . $this->entry['template']) . '.html';
+        $path = 'themes/' . flextype('registry')->get('plugins.site.settings.theme') . '/' . (empty($entry['template']) ? 'templates/default' : 'templates/' . $entry['template']) . '.html';
 
         if (! Filesystem::has(PATH['project'] . '/' . $path)) {
-            return $response->write("Template {$this->entry['template']} not found");
+            return $response->write("Template {$entry['template']} not found");
         }
 
-        $data = ['entry' => $this->entry,
-                 'query' => $query,
-                 'uri' => $uri,
-                 'args' => $args,
+        $data = ['entry'   => $entry,
+                 'args'    => $args,
                  'request' => $request];
 
         if ($isEntryNotFound) {
