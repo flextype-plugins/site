@@ -3,7 +3,7 @@ version: 1.11.0
 description: Site plugin to display entries content on the website frontend.
 icon:
   name: globe
-  set: "fontawesome|solid"
+  set: bootstrap
 author:
   name: Sergey Romanenko
   email: sergey.romanenko@flextype.org
