@@ -8,8 +8,8 @@
     "authors": [
         {
             "name": "Sergey Romanenko",
-            "email": "sergey.romanenko@flextype.org",
-            "homepage": "https://flextype.org"
+            "email": "awilum@msn.com",
+            "homepage": "https://awilum.github.io/flextype"
         }
     ],
     "support": {
@@ -18,9 +18,7 @@
     "require": {
         "php": ">=7.4.0",
         "ext-json": "*",
-        "middlewares/trailing-slash": "~1.1.0",
-        "flextype-components/arrays" : "3.0.1",
-        "flextype-components/filesystem": "2.0.8"
+        "middlewares/trailing-slash": "~1.1.0"
     },
     "config": {
         "apcu-autoloader": true,
@@ -31,7 +29,10 @@
     },
     "autoload": {
         "classmap": [
-            "app"
+            "src"
+        ],
+        "files": [
+            "src/helpers/helpers.php"
         ]
     }
 }

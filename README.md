@@ -1,4 +1,4 @@
-<h1 align="center">Site Plugin for <a href="https://flextype.org/">Flextype</a></h1>
+<h1 align="center">Site Plugin for <a href="https://awilum.github.io/flextype/">Flextype</a></h1>
 
 <p align="center">
 <a href="https://github.com/flextype-plugins/site/releases"><img alt="Version" src="https://img.shields.io/github/release/flextype-plugins/site.svg?label=version&color=black"></a> <a href="https://github.com/flextype-plugins/site"><img src="https://img.shields.io/badge/license-MIT-blue.svg?color=black" alt="License"></a> <a href="https://github.com/flextype-plugins/site"><img src="https://img.shields.io/github/downloads/flextype-plugins/site/total.svg?color=black" alt="Total downloads"></a> <a href="https://github.com/flextype/flextype"><img src="https://img.shields.io/badge/Flextype-0.9.16-green.svg" alt="Flextype"></a> <a href=""><img src="https://img.shields.io/discord/423097982498635778.svg?logo=discord&color=black&label=Discord%20Chat" alt="Discord"></a>
@@ -64,8 +64,8 @@ version: 1.0.0
 description: Noir theme for Flextype
 author:
   name: Sergey Romanenko
-  email: sergey.romanenko@flextype.org
-  url: https://flextype.org
+  email: awilum@msn.com
+  url: https://awilum.github.io/flextype
 homepage: https://github.com/flextype-themes/noir
 bugs: https://github.com/flextype-themes/noir/issues
 license: MIT
@@ -76,8 +76,8 @@ You can reach any of these items via registry `themes` by using the standard dot
 Usage:
 
 ```twig
-Theme name: {{ flextype.registry.get('themes.noir.manifest.name') }}
-Theme version: {{ flextype.registry.get('themes.noir.manifest.version') }}
+Theme name: {{ registry().get('themes.noir.manifest.name') }}
+Theme version: {{ registry().get('themes.noir.manifest.version') }}
 ```
 
 Result:
@@ -92,8 +92,8 @@ You can also reach these same values from a Flextype theme(s) with PHP syntax:
 Usage:
 
 ```php
-$theme_name = flextype('registry')->get('themes.noir.manifest.name');
-$theme_version = flextype('registry')->get('themes.noir.manifest.version');
+$theme_name = registry()->get('themes.noir.manifest.name');
+$theme_version = registry()->get('themes.noir.manifest.version');
 ```
 
 ### Accessing Theme Configuration
@@ -118,7 +118,7 @@ highlight: red
 Then in your theme templates you can access these variable using the `themes.noir` object:
 
 ```twig
-<h1 style="color:{{ flextype.registry.get('themes.noir.settings.highlight') }}">
+<h1 style="color:{{ registry().get('themes.noir.settings.highlight') }}">
     BUILD FAST, FLEXIBLE, EASIER TO MANAGE WEBSITES WITH FLEXTYPE.
 </h1>
 ```
@@ -131,7 +131,7 @@ Result:
 In PHP you can access the current theme configuration like this:
 
 ```php
-$highlight = flextype('registry')->get('themes.noir.settings.highlight');
+$highlight = registry()->get('themes.noir.settings.highlight');
 ```
 
 ## LICENSE
