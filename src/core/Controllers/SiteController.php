@@ -93,7 +93,25 @@ class SiteController
                 switch (registry()->get('plugins.site.settings.theme.template.engine')) {
                     case 'twig':
                         if (registry()->has('plugins.twig')) {
-                            $response = twig()->render($isEntryNotFound ? $response->withStatus(404) : $response->withStatus(200), $path . '.' . registry()->get('plugins.site.settings.theme.template.extension'), $data);
+                            if (registry()->get('plugins.site.settings.cache.enabled')) {
+
+                                filesystem()->directory(PATH['tmp'] . '/site/')->ensureExists();
+
+                                $cacheFileID = PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html';
+
+                                if (filesystem()->file($cacheFileID)->exists()) {
+                                    $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
+                                } else {
+                                    $renderedTemplate = twig()->fetch($path . '.' . registry()->get('plugins.site.settings.theme.template.extension'), $data);
+                                    filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
+                                }
+                                
+                            } else {
+                                $renderedTemplate = twig()->fetch($path . '.' . registry()->get('plugins.site.settings.theme.template.extension'), $data);
+                            }
+                            $response->getBody()->write($renderedTemplate);
+                            $response = $response->withStatus($isEntryNotFound ? 404 : 200);
+                            return $response;
                         } else {
                             $response->getBody()->write("Twig plugin not found");
                             $response = $response->withStatus(404);
@@ -105,7 +123,24 @@ class SiteController
                     default:
                         View::setDirectory(PATH['project']);
                         View::setExtension(registry()->get('plugins.site.settings.theme.template.extension'));
-                        $response->getBody()->write(view($path)->with($data)->render());
+                        
+                        if (registry()->get('plugins.site.settings.cache.enabled')) {
+
+                            filesystem()->directory(PATH['tmp'] . '/site/')->ensureExists();
+
+                            $cacheFileID = PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html';
+
+                            if (filesystem()->file($cacheFileID)->exists()) {
+                                $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
+                            } else {
+                                $renderedTemplate = view($path)->fetch($path, $data);
+                                filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
+                            }
+                        } else {
+                            $renderedTemplate = view($path)->fetch($path, $data);
+                        }
+
+                        $response->getBody()->write($renderedTemplate);
                         $response = $response->withStatus($isEntryNotFound ? 404 : 200);
                         break;
                 }
@@ -113,6 +148,23 @@ class SiteController
         }
 
         return $response;
+    }
+
+    /**
+     * Get Cache ID for entry.
+     *
+     * @param  string $id Unique identifier of the entry.
+     *
+     * @return string Cache ID.
+     *
+     * @access public
+     */
+    public function getCacheID(string $id): string
+    {
+        return strings(registry()->get('plugins.site.settings.theme.name') . 
+                       registry()->get('plugins.site.settings.theme.template.engine') .
+                       registry()->get('plugins.site.settings.theme.template.extension') . 
+                       $id)->hash()->toString();
     }
 
     /**

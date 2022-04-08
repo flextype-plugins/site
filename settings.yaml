@@ -33,6 +33,10 @@ theme:
     extension: html
     default: default
 
+# Site static cache
+cache:
+  enabled: true
+
 # The entries settings
 #
 # - main:                 Main entry
