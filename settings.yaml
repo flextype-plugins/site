@@ -37,6 +37,9 @@ theme:
 cache:
   enabled: true
 
+# Trailing slash
+trailing_slash: true
+
 # The entries settings
 #
 # - main:                 Main entry
