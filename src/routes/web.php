@@ -9,9 +9,6 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-
-use Slim\Http\Environment;
-use Slim\Http\Uri;
 use Flextype\Plugin\Site\Controllers\SiteController;
 use Flextype\Middlewares\CsrfMiddleware;
 

@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Flextype\Plugin\Site;
 
 use Middlewares\TrailingSlash;
-use Flextype\Plugin\Site\Themes;
 use function is_file;
 
 /**
@@ -38,12 +37,3 @@ if (getUriString() !== strings(registry()->get('flextype.settings.base_path'))->
 
 // Load routes
 require_once __DIR__ . '/src/routes/web.php';
-
-// Add Themes Service
-container()->set('themes', new Themes());
-
-// Include theme bootstrap file 
-$themeBootstrapPath = PATH['project'] . '/themes/' . registry()->get('plugins.site.settings.theme.name') . '/theme.php';
-if (filesystem()->file($themeBootstrapPath)->exists()) {
-    include_once $themeBootstrapPath;
-} 

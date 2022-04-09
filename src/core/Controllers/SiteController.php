@@ -64,11 +64,11 @@ class SiteController
         }
 
         // Set template path for current entry
-        $path = 'themes/' . registry()->get('plugins.site.settings.theme.name') . '/' . (empty($entry['template']) ? 'templates/' . registry()->get('plugins.site.settings.theme.template.default') : 'templates/' . $entry['template']);
-
+        $template = isset($entry['template']) ? $entry['template'] : registry()->get('plugins.site.settings.templates.default');
+       
         // Check template file
-        if (! file_exists(PATH['project'] . '/' . $path . '.' . registry()->get('plugins.site.settings.theme.template.extension'))) {
-            $response->getBody()->write("Template {$entry['template']} not found");
+        if (! file_exists(PATH['project'] . '/templates/' . $template . '.' . registry()->get('plugins.site.settings.templates.extension'))) {
+            $response->getBody()->write("Template {$template} not found");
             $response = $response->withStatus(404);
             return $response;
         }
@@ -90,7 +90,7 @@ class SiteController
             case 'html':
             default:
      
-                switch (registry()->get('plugins.site.settings.theme.template.engine')) {
+                switch (registry()->get('plugins.site.settings.templates.engine')) {
                     case 'twig':
                         if (registry()->has('plugins.twig')) {
                             if (registry()->get('plugins.site.settings.cache.enabled')) {
@@ -102,12 +102,12 @@ class SiteController
                                 if (filesystem()->file($cacheFileID)->exists()) {
                                     $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
                                 } else {
-                                    $renderedTemplate = twig()->fetch($path . '.' . registry()->get('plugins.site.settings.theme.template.extension'), $data);
+                                    $renderedTemplate = twig()->fetch($template . '.' . registry()->get('plugins.site.settings.templates.extension'), $data);
                                     filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
                                 }
                                 
                             } else {
-                                $renderedTemplate = twig()->fetch($path . '.' . registry()->get('plugins.site.settings.theme.template.extension'), $data);
+                                $renderedTemplate = twig()->fetch($template . '.' . registry()->get('plugins.site.settings.templates.extension'), $data);
                             }
                             $response->getBody()->write($renderedTemplate);
                             $response = $response->withStatus($isEntryNotFound ? 404 : 200);
@@ -121,8 +121,8 @@ class SiteController
 
                     case 'view': 
                     default:
-                        View::setDirectory(PATH['project']);
-                        View::setExtension(registry()->get('plugins.site.settings.theme.template.extension'));
+                        View::setDirectory(PATH['project'] . '/templates/');
+                        View::setExtension(registry()->get('plugins.site.settings.templates.extension'));
                         
                         if (registry()->get('plugins.site.settings.cache.enabled')) {
 
@@ -133,11 +133,11 @@ class SiteController
                             if (filesystem()->file($cacheFileID)->exists()) {
                                 $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
                             } else {
-                                $renderedTemplate = view($path)->fetch($path, $data);
+                                $renderedTemplate = view($template)->fetch($template, $data);
                                 filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
                             }
                         } else {
-                            $renderedTemplate = view($path)->fetch($path, $data);
+                            $renderedTemplate = view($template)->fetch($template, $data);
                         }
 
                         $response->getBody()->write($renderedTemplate);
@@ -161,9 +161,8 @@ class SiteController
      */
     public function getCacheID(string $id): string
     {
-        return strings(registry()->get('plugins.site.settings.theme.name') . 
-                       registry()->get('plugins.site.settings.theme.template.engine') .
-                       registry()->get('plugins.site.settings.theme.template.extension') . 
+        return strings(registry()->get('plugins.site.settings.templates.engine') .
+                       registry()->get('plugins.site.settings.templates.extension') . 
                        $id)->hash()->toString();
     }
 
