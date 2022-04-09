@@ -34,10 +34,12 @@ The following dependencies need to be downloaded and installed for Site Plugin.
 
 #### Examples
 
+Using PHP View
 ```php
 <?= $entry['title'] ?>
 ```
 
+Using [Twig Plugin](https://github.com/flextype-plugins/twig)
 ```twig
 {{ entry.title }}
 ```
