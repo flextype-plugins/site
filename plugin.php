@@ -32,7 +32,9 @@ use function is_file;
 $siteLoader = require_once $siteAutoload;
 
 // Add middleware TrailingSlash for all routes
-app()->add((new TrailingSlash(registry()->get('plugins.site.settings.trailing_slash')))->redirect());
+if (getUriString() !== strings(registry()->get('flextype.settings.base_path'))->append('/')->toString()) {
+    app()->add((new TrailingSlash(registry()->get('plugins.site.settings.trailing_slash')))->redirect());
+}
 
 // Load routes
 require_once __DIR__ . '/src/routes/web.php';

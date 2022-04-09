@@ -35,10 +35,10 @@ theme:
 
 # Site static cache
 cache:
-  enabled: true
+  enabled: false
 
 # Trailing slash
-trailing_slash: true
+trailing_slash: false
 
 # The entries settings
 #

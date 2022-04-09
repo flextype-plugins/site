@@ -41,7 +41,7 @@ class SiteController
         } else {
             $entryUri = ltrim($uri, '/');
         }
-
+        
         // Get entry body
         $entryBody = entries()->fetch($entryUri)->toArray();
 
