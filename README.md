@@ -10,8 +10,6 @@ Site plugin to display entries content on the website frontend.
 
 The following dependencies need to be downloaded and installed for Site Plugin.
 
-### System
-
 | Item | Version | Download |
 |---|---|---|
 | [flextype](https://github.com/flextype/flextype) | 0.10.0 | [download](https://github.com/flextype/flextype/releases) |
