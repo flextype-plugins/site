@@ -75,77 +75,89 @@ class SiteController
 
         $data = ['entry' => $entry, 'uri' => $uri, 'request' => $request];
 
+        $status = $isEntryNotFound ? 404 : 200;
+
         switch ($format) {
             case 'json':
                 if (count($entry) > 0) {
                     $response->getBody()->write(serializers()->json()->encode($entry));
                 }
         
-                $response = $response->withStatus($isEntryNotFound ? 404 : 200);
+                $response = $response->withStatus($status);
                 $response = $response->withHeader('Content-Type', 'application/json;charset=' . registry()->get('flextype.settings.charset'));
         
                 return $response;
                 break;
-            
             case 'html':
             default:
-     
                 switch (registry()->get('plugins.site.settings.templates.engine')) {
                     case 'twig':
-                        if (registry()->has('plugins.twig')) {
-                            if (registry()->get('plugins.site.settings.cache.enabled')) {
-
-                                filesystem()->directory(PATH['tmp'] . '/site/')->ensureExists();
-
-                                $cacheFileID = PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html';
-
-                                if (filesystem()->file($cacheFileID)->exists()) {
-                                    $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
-                                } else {
-                                    $renderedTemplate = twig()->fetch($template . '.' . registry()->get('plugins.site.settings.templates.extension'), $data);
-                                    filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
-                                }
-                                
-                            } else {
-                                $renderedTemplate = twig()->fetch($template . '.' . registry()->get('plugins.site.settings.templates.extension'), $data);
-                            }
-                            $response->getBody()->write($renderedTemplate);
-                            $response = $response->withStatus($isEntryNotFound ? 404 : 200);
-                            return $response;
-                        } else {
-                            $response->getBody()->write("Twig plugin not found");
-                            $response = $response->withStatus(404);
-                            return $response;
-                        }
+                        return $this->twigTemplateEngine($response, $template, $entryUri, $data, $status);
                         break;
 
                     case 'view': 
                     default:
-                        View::setDirectory(PATH['project'] . '/templates/');
-                        View::setExtension(registry()->get('plugins.site.settings.templates.extension'));
-                        
-                        if (registry()->get('plugins.site.settings.cache.enabled')) {
-
-                            filesystem()->directory(PATH['tmp'] . '/site/')->ensureExists();
-
-                            $cacheFileID = PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html';
-
-                            if (filesystem()->file($cacheFileID)->exists()) {
-                                $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
-                            } else {
-                                $renderedTemplate = view($template)->fetch($template, $data);
-                                filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
-                            }
-                        } else {
-                            $renderedTemplate = view($template)->fetch($template, $data);
-                        }
-
-                        $response->getBody()->write($renderedTemplate);
-                        $response = $response->withStatus($isEntryNotFound ? 404 : 200);
+                        return $this->viewTemplateEngine($response, $template, $entryUri, $data, $status);
                         break;
                 }
                 break;
         }
+
+        return $response;
+    }
+
+    private function twigTemplateEngine($response, $template, $entryUri, $data, $status) 
+    {
+        if (registry()->has('plugins.twig')) {
+            if (registry()->get('plugins.site.settings.cache.enabled')) {
+
+                filesystem()->directory(PATH['tmp'] . '/site/')->ensureExists();
+
+                $cacheFileID = PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html';
+
+                if (filesystem()->file($cacheFileID)->exists()) {
+                    $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
+                } else {
+                    $renderedTemplate = twig()->fetch($template . '.' . registry()->get('plugins.site.settings.templates.extension'), $data);
+                    filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
+                }
+                
+            } else {
+                $renderedTemplate = twig()->fetch($template . '.' . registry()->get('plugins.site.settings.templates.extension'), $data);
+            }
+            $response->getBody()->write($renderedTemplate);
+            $response = $response->withStatus($status);
+            return $response;
+        } else {
+            $response->getBody()->write("Twig plugin not found");
+            $response = $response->withStatus(404);
+            return $response;
+        }
+    }
+
+    private function viewTemplateEngine($response, $template, $entryUri, $data, $status) 
+    {
+        View::setDirectory(PATH['project'] . '/templates/');
+        View::setExtension(registry()->get('plugins.site.settings.templates.extension'));
+        
+        if (registry()->get('plugins.site.settings.cache.enabled')) {
+
+            filesystem()->directory(PATH['tmp'] . '/site/')->ensureExists();
+
+            $cacheFileID = PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html';
+
+            if (filesystem()->file($cacheFileID)->exists()) {
+                $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
+            } else {
+                $renderedTemplate = view($template)->fetch($template, $data);
+                filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
+            }
+        } else {
+            $renderedTemplate = view($template)->fetch($template, $data);
+        }
+
+        $response->getBody()->write($renderedTemplate);
+        $response = $response->withStatus($status);
 
         return $response;
     }
