@@ -23,6 +23,7 @@ author:
 
 # Templates
 templates:
+  directory: "templates"
   engine: view
   extension: php
   default: default

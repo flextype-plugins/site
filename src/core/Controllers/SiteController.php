@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Flextype\Plugin\Site\Controllers;
 
 use Glowy\View\View;
+use Glowy\Macroable\Macroable;
 use Slim\Http\Environment;
 use Slim\Http\Uri;
 use Psr\Http\Message\ResponseInterface;
@@ -65,16 +66,15 @@ class SiteController
 
         // Set template path for current entry
         $template = isset($entry['template']) ? $entry['template'] : registry()->get('plugins.site.settings.templates.default');
-       
+                
         // Check template file
-        if (! file_exists(PATH['project'] . '/templates/' . $template . '.' . registry()->get('plugins.site.settings.templates.extension'))) {
+        if (! file_exists(PATH['project'] . '/' . registry()->get('flextype.settings.view.directory') . '/' . registry()->get('plugins.site.settings.templates.directory') . '/' . $template . '.' . registry()->get('plugins.site.settings.templates.extension'))) {
             $response->getBody()->write("Template {$template} not found");
             $response = $response->withStatus(404);
             return $response;
         }
 
-        $data = ['entry' => $entry, 'uri' => $uri, 'request' => $request];
-
+        $data   = ['entry' => $entry, 'uri' => $uri, 'request' => $request];
         $status = $isEntryNotFound ? 404 : 200;
 
         switch ($format) {
@@ -90,58 +90,39 @@ class SiteController
                 break;
             case 'html':
             default:
-                switch (registry()->get('plugins.site.settings.templates.engine')) {
-                    case 'twig':
-                        return $this->twigTemplateEngine($response, $template, $entryUri, $data, $status);
-                        break;
-
-                    case 'view': 
-                    default:
-                        return $this->viewTemplateEngine($response, $template, $entryUri, $data, $status);
-                        break;
-                }
+                return $this->render($response, $template, $entryUri, $data, $status);
                 break;
         }
 
         return $response;
     }
 
-    private function twigTemplateEngine($response, $template, $entryUri, $data, $status) 
+    /**
+     * Fetch template
+     */
+    public function fetch($template, $data)
     {
-        if (registry()->has('plugins.twig')) {
-            if (registry()->get('plugins.site.settings.cache.enabled')) {
+        $template = registry()->get('plugins.site.settings.templates.directory') . '/' . $template;
 
-                filesystem()->directory(PATH['tmp'] . '/site/')->ensureExists();
+        switch (registry()->get('plugins.site.settings.templates.engine')) {
+            case 'twig':
+                return twig()->fetch($template . '.'. registry()->get('plugins.site.settings.templates.extension'), $data);
+                break;
 
-                $cacheFileID = PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html';
-
-                if (filesystem()->file($cacheFileID)->exists()) {
-                    $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
-                } else {
-                    $renderedTemplate = twig()->fetch($template . '.' . registry()->get('plugins.site.settings.templates.extension'), $data);
-                    filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
-                }
-                
-            } else {
-                $renderedTemplate = twig()->fetch($template . '.' . registry()->get('plugins.site.settings.templates.extension'), $data);
-            }
-            $response->getBody()->write($renderedTemplate);
-            $response = $response->withStatus($status);
-            return $response;
-        } else {
-            $response->getBody()->write("Twig plugin not found");
-            $response = $response->withStatus(404);
-            return $response;
+            case 'view':
+            default: 
+                View::setExtension(registry()->get('plugins.site.settings.templates.extension'));
+                return view($template)->fetch($template, $data);
+                break;
         }
     }
 
-    private function viewTemplateEngine($response, $template, $entryUri, $data, $status) 
+    /**
+     * Render template
+     */
+    public function render($response, $template, $entryUri, $data, $status) 
     {
-        View::setDirectory(PATH['project'] . '/templates/');
-        View::setExtension(registry()->get('plugins.site.settings.templates.extension'));
-        
         if (registry()->get('plugins.site.settings.cache.enabled')) {
-
             filesystem()->directory(PATH['tmp'] . '/site/')->ensureExists();
 
             $cacheFileID = PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html';
@@ -149,16 +130,16 @@ class SiteController
             if (filesystem()->file($cacheFileID)->exists()) {
                 $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
             } else {
-                $renderedTemplate = view($template)->fetch($template, $data);
+                $renderedTemplate = $this->fetch($template, $data);
                 filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
             }
+            
         } else {
-            $renderedTemplate = view($template)->fetch($template, $data);
+            $renderedTemplate = $this->fetch($template, $data);
         }
 
         $response->getBody()->write($renderedTemplate);
         $response = $response->withStatus($status);
-
         return $response;
     }
 
@@ -173,7 +154,8 @@ class SiteController
      */
     public function getCacheID(string $id): string
     {
-        return strings(registry()->get('plugins.site.settings.templates.engine') .
+        return strings(registry()->get('plugins.site.settings.templates.directory') .
+                       registry()->get('plugins.site.settings.templates.engine') .
                        registry()->get('plugins.site.settings.templates.extension') . 
                        $id)->hash()->toString();
     }
