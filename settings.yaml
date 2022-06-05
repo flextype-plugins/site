@@ -49,3 +49,12 @@ entries:
     description: We're sorry but the page you are looking for doesn't appear to exist!
     content: "<center>We're sorry but the page you are looking for doesn't appear to exist!</center>"
     template: default
+
+# Redirects
+redirects: []
+  #- 
+    #from: /foo
+    #to: /bar
+    #to_route_name: home
+    #to_external: https://www.google.com
+    #status: 301

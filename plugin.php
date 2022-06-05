@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Flextype\Plugin\Site;
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Middlewares\TrailingSlash;
 use function is_file;
 
@@ -37,3 +39,31 @@ if (getUriString() !== strings(registry()->get('flextype.settings.base_path'))->
 
 // Load routes
 require_once __DIR__ . '/src/routes/web.php';
+
+// Redirects
+$redirects = registry()->get('plugins.site.settings.redirects');
+if (count($redirects) > 0) {
+    foreach ($redirects as $redirect) {
+        app()->get($redirect['from'], function (ServerRequestInterface $request, ResponseInterface $response) use ($redirect) {
+            
+            $to = '';
+
+            if (isset($redirect['to_route_name'])) {
+                $to = urlFor($redirect['to_route_name'], isset($redirect['data']) ? $redirect['data'] : [], isset($redirect['queryParams']) ? $redirect['queryParams'] : []);
+            }
+
+            if (isset($redirect['to'])) {
+                $to = getBasePath() . $redirect['to'];
+            }
+
+            if (isset($redirect['to_external'])) {
+                header('Location: ' . $redirect['to_external'], true, isset($redirect['status']) ? $redirect['status'] : 301);
+                exit(1);
+            }
+
+            $response = $response->withStatus(isset($redirect['status']) ? $redirect['status'] : 301);
+            $response = $response->withHeader('Location', $to);
+            return $response;
+        });
+    }
+}
