@@ -1,9 +1,9 @@
 <a name="2.0.0"></a>
-# [2.0.0](https://github.com/flextype-plugins/site/compare/v1.11.0...v2.0.0) (2021-XX-XX)
+# [2.0.0](https://github.com/flextype-plugins/site/compare/v1.11.0...v2.0.0) (2021-06-XX)
 
 ### Features
 
-* **core** update code base for new Flextype 0.10.0
+* **core** update code base for new Flextype 1.0.0-alpha.1
 
 <a name="1.11.0"></a>
 # [1.11.0](https://github.com/flextype-plugins/site/compare/v1.10.0...v1.11.0) (2021-01-14)

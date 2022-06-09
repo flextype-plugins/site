@@ -13,4 +13,4 @@ bugs: https://github.com/flextype-plugins/site/issues
 license: MIT
 
 dependencies:
-  flextype: 0.10.0
+  flextype: "^1.0.0-alpha.1"

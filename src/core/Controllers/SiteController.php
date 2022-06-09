@@ -68,7 +68,7 @@ class SiteController
         $template = isset($entry['template']) ? $entry['template'] : registry()->get('plugins.site.settings.templates.default');
                 
         // Check template file
-        if (! file_exists(PATH['project'] . '/' . registry()->get('flextype.settings.view.directory') . '/' . registry()->get('plugins.site.settings.templates.directory') . '/' . $template . '.' . registry()->get('plugins.site.settings.templates.extension'))) {
+        if (! file_exists(PATH['project'] . '/' . registry()->get('plugins.site.settings.templates.directory') . '/' . $template . '.' . registry()->get('plugins.site.settings.templates.extension'))) {
             $response->getBody()->write("Template {$template} not found");
             $response = $response->withStatus(404);
             return $response;
