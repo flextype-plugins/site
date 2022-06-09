@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Flextype\Plugin\Site;
 
+use Flextype\Plugin\Site\Console\Commands\Cache\CacheClearSiteStaticCommand;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Middlewares\TrailingSlash;
@@ -39,6 +40,8 @@ if (getUriString() !== strings(registry()->get('flextype.settings.base_path'))->
 
 // Load routes
 require_once __DIR__ . '/src/routes/web.php';
+
+console()->add(new CacheClearSiteStaticCommand());
 
 // Redirects
 $redirects = registry()->get('plugins.site.settings.redirects');
