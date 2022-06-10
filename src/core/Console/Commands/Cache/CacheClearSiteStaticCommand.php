@@ -33,7 +33,7 @@ class CacheClearSiteStaticCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $configPath = PATH['tmp'] . '/site';
+        $configPath = PATH_TMP . '/site';
 
         if (filesystem()->directory($configPath)->exists()) {
             if (filesystem()->directory($configPath)->delete()) {

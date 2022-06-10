@@ -68,7 +68,7 @@ class SiteController
         $template = isset($entry['template']) ? $entry['template'] : registry()->get('plugins.site.settings.templates.default');
                 
         // Check template file
-        if (! file_exists(PATH['project'] . '/' . registry()->get('plugins.site.settings.templates.directory') . '/' . $template . '.' . registry()->get('plugins.site.settings.templates.extension'))) {
+        if (! file_exists(PATH_PROJECT . '/' . registry()->get('plugins.site.settings.templates.directory') . '/' . $template . '.' . registry()->get('plugins.site.settings.templates.extension'))) {
             $response->getBody()->write("Template {$template} not found");
             $response = $response->withStatus(404);
             return $response;
@@ -123,15 +123,15 @@ class SiteController
     public function render($response, $template, $entryUri, $data, $status) 
     {
         if (registry()->get('plugins.site.settings.cache.enabled')) {
-            filesystem()->directory(PATH['tmp'] . '/site/')->ensureExists();
+            filesystem()->directory(PATH_TMP . '/site/')->ensureExists();
 
-            $cacheFileID = PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html';
+            $cacheFileID = PATH_TMP . '/site/' . $this->getCacheID($entryUri) . '.html';
 
             if (filesystem()->file($cacheFileID)->exists()) {
-                $renderedTemplate = filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
+                $renderedTemplate = filesystem()->file(PATH_TMP . '/site/' . $this->getCacheID($entryUri) . '.html')->get();
             } else {
                 $renderedTemplate = $this->fetch($template, $data);
-                filesystem()->file(PATH['tmp'] . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
+                filesystem()->file(PATH_TMP . '/site/' . $this->getCacheID($entryUri) . '.html')->put($renderedTemplate);
             }
             
         } else {
