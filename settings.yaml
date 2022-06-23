@@ -58,3 +58,18 @@ redirects: []
     #to_route_name: home
     #to_external: https://www.google.com
     #status: 301
+
+# Settings for static site generation
+static:
+
+  # Destination for generated static site files (without trailing and without starting slash)
+  site_path: '_site'
+
+  # Site url (without trailing)
+  site_url: ''
+
+  # Ignore lists (without trailing and without starting slash)
+  ignore:
+    entries: []
+    assets: 
+      - src

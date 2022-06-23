@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Flextype\Plugin\Site;
 
+use Flextype\Plugin\Site\Console\Commands\Site\SiteGenerateCommand;
 use Flextype\Plugin\Site\Console\Commands\Cache\CacheClearSiteStaticCommand;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -33,15 +34,16 @@ use function is_file;
  */
 $siteLoader = require_once $siteAutoload;
 
+console()->add(new CacheClearSiteStaticCommand());
+console()->add(new SiteGenerateCommand());
+
 // Add middleware TrailingSlash for all routes
 if (getUriString() !== strings(registry()->get('flextype.settings.base_path'))->prepend('/')->append('/')->toString()) {
-    app()->add((new TrailingSlash(registry()->get('plugins.site.settings.trailing_slash')))->redirect());
+   app()->add((new TrailingSlash(registry()->get('plugins.site.settings.trailing_slash')))->redirect());
 }
 
 // Load routes
 require_once __DIR__ . '/src/routes/web.php';
-
-console()->add(new CacheClearSiteStaticCommand());
 
 // Redirects
 $redirects = registry()->get('plugins.site.settings.redirects');
