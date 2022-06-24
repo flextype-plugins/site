@@ -3,7 +3,11 @@
 
 ### Features
 
-* **core** update code base for new Flextype 1.0.0-alpha.1
+* **core** Updated code base for new Flextype 1.0.0-alpha.1
+* **core** Added ability to generate static site.
+* **core** Added ability to use static pages cache.
+* **core** Added ability to use various template engines. Suppoerted Twig and View.
+* **core** Added ability to setup redirectes.
 
 <a name="1.11.0"></a>
 # [1.11.0](https://github.com/flextype-plugins/site/compare/v1.10.0...v1.11.0) (2021-01-14)
