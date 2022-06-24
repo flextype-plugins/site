@@ -1,7 +1,7 @@
 <h1 align="center">Site Plugin for <a href="https://awilum.github.io/flextype">Flextype</a></h1>
 
 <p align="center">
-<a href="https://github.com/flextype-plugins/site/releases"><img alt="Version" src="https://img.shields.io/github/release/flextype-plugins/site.svg?label=version&color=black&style=for-the-badge"></a> <a href="https://github.com/flextype-plugins/site"><img src="https://img.shields.io/badge/license-MIT-blue.svg?color=black&style=for-the-badge" alt="License"></a> <a href="https://github.com/flextype-plugins/site"><img src="https://img.shields.io/github/downloads/flextype-plugins/site/total.svg?color=black&style=for-the-badge" alt="Total downloads"></a> <a href="https://discord.gg/ewQkqgfBAc"><img src="https://img.shields.io/discord/423097982498635778.svg?logo=discord&color=black&label=Discord%20Chat&style=for-the-badge" alt="Discord"></a>
+<img src="https://img.shields.io/badge/license-MIT-blue.svg?label=License" alt="License MIT"> <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/flextype-plugins/site?label=Stars"> <img alt="GitHub forks" src="https://img.shields.io/github/forks/flextype-plugins/site?label=Forks"> <a href="https://hitsofcode.com"><img alt="Hits of Code" src="https://hitsofcode.com/github/flextype-plugins/site?branch=2.x"></a> <a href="https://discord.gg/ewQkqgfBAc"><img src="https://img.shields.io/discord/423097982498635778.svg?logo=discord&label=Discord%20Chat" alt="Discord"></a>
 </p>
 
 Site plugin to display entries content on the website frontend.
