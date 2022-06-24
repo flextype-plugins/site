@@ -186,35 +186,37 @@ class SiteGenerateCommand extends Command
         );
 
         // Proceed assets.
-        filesystem()->directory($staticSitePath . '/' . PROJECT_NAME . '/assets')->ensureExists(0755, true);
-        filesystem()->directory(PATH_PROJECT . '/assets')->copy($staticSitePath . '/' . PROJECT_NAME . '/assets');
-        filesystem()->file($staticSitePath . '/' . PROJECT_NAME . '/index.html')->put('');
+        if (filesystem()->directory($staticSitePath . '/' . PROJECT_NAME . '/assets')->exists()) {
+            filesystem()->directory($staticSitePath . '/' . PROJECT_NAME . '/assets')->ensureExists(0755, true);
+            filesystem()->directory(PATH_PROJECT . '/assets')->copy($staticSitePath . '/' . PROJECT_NAME . '/assets');
+            filesystem()->file($staticSitePath . '/' . PROJECT_NAME . '/index.html')->put('');
 
-        // Remove ignored assets from the static site.
-        foreach (registry()->get('plugins.site.settings.static.ignore.assets') as $item) {
-            if (filesystem()->directory(PATH_PROJECT . '/assets/' . $item)->exists()) {
-                filesystem()->directory(PATH_PROJECT . '/assets/' . $item)->delete();
+            // Remove ignored assets from the static site.
+            foreach (registry()->get('plugins.site.settings.static.ignore.assets') as $item) {
+                if (filesystem()->directory(PATH_PROJECT . '/assets/' . $item)->exists()) {
+                    filesystem()->directory(PATH_PROJECT . '/assets/' . $item)->delete();
+                }
             }
-        }
 
-        if (! filesystem()->file(PATH_PROJECT . '/assets/')->exists()) {
+            if (! filesystem()->file(PATH_PROJECT . '/assets/')->exists()) {
+                $output->write(
+                    renderToString(
+                        div('[b]Failure[/b]: Assets wasn\'t created.', 
+                            'color-danger px-2 pb-1')
+                    )
+                );
+
+                return Command::FAILURE;
+            }
+
             $output->write(
                 renderToString(
-                    div('[b]Failure[/b]: Assets wasn\'t created.', 
-                        'color-danger px-2 pb-1')
+                    div('[b]Success[/b]: Assets created successfully.', 
+                        ' color-success px-2')
                 )
             );
-
-            return Command::FAILURE;
         }
-
-        $output->write(
-            renderToString(
-                div('[b]Success[/b]: Assets created successfully.', 
-                    ' color-success px-2')
-            )
-        );
-
+        
         $output->write(
             renderToString(
                 div('Site generated in [b]'. sprintf("%01.4f", microtime(true) - $elapsedTimeStartPoint) .'[/b] seconds.', 'px-2 pt-1 pb-1')
