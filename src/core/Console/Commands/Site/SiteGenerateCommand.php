@@ -186,7 +186,7 @@ class SiteGenerateCommand extends Command
         );
 
         // Proceed assets.
-        if (filesystem()->directory($staticSitePath . '/' . PROJECT_NAME . '/assets')->exists()) {
+        if (filesystem()->directory(PATH_PROJECT . '/assets')->exists()) {
             filesystem()->directory($staticSitePath . '/' . PROJECT_NAME . '/assets')->ensureExists(0755, true);
             filesystem()->directory(PATH_PROJECT . '/assets')->copy($staticSitePath . '/' . PROJECT_NAME . '/assets');
             filesystem()->file($staticSitePath . '/' . PROJECT_NAME . '/index.html')->put('');
