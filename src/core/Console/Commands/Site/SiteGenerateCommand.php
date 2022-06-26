@@ -95,6 +95,17 @@ class SiteGenerateCommand extends Command
             )
         );
 
+        // Clear cache.
+        if (filesystem()->directory(PATH_TMP)->exists()) {
+            filesystem()->directory(PATH_TMP)->delete();
+            
+            $output->write(
+                renderToString(
+                    div('[b]Success[/b]: Cache cleared successfully.', 
+                        'color-success px-2')
+                )
+            );    
+        }
 
         // Create folder for static site.
         if (filesystem()->directory($staticSitePath)->exists()) {
