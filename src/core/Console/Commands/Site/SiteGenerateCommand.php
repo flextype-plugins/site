@@ -31,13 +31,13 @@ class SiteGenerateCommand extends Command
         $this->setName('site:generate');
         $this->setDescription('Generate site.');
         $this->addOption('site-path', null, InputOption::VALUE_REQUIRED, 'Destination for generated static site files (without trailing and without starting slash)');
-        $this->addOption('site-url', null, InputOption::VALUE_REQUIRED, 'Site url (without trailing).');
+        $this->addOption('site-url', null, InputOption::VALUE_REQUIRED, 'Site url (without trailing slash).');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('site-path')) {
-            $staticSitePath = ROOT_DIR . '/' . $input->getOption('output');
+            $staticSitePath = ROOT_DIR . '/' . $input->getOption('site-path');
         } else {
             $staticSitePath = ROOT_DIR . '/' . registry()->get('plugins.site.settings.static.site_path');
         }
