@@ -39,16 +39,16 @@ class CacheClearSiteStaticCommand extends Command
             if (filesystem()->directory($configPath)->delete()) {
                 $output->write(
                     renderToString(
-                        div('Success: Site static were successfully cleared from the cache.', 
-                            'bg-success px-2 py-1')
+                        div('Site static were successfully cleared from the cache.', 
+                            'color-success px-2 py-1')
                     )
                 );
                 $result = Command::SUCCESS;
             } else {
                 $output->write(
                     renderToString(
-                        div('Failure: Site static cache wasn\'t cleared.', 
-                            'bg-danger px-2 py-1')
+                        div('Site static cache wasn\'t cleared.', 
+                            'color-danger px-2 py-1')
                     )
                 );
                 $result = Command::FAILURE;
@@ -56,8 +56,8 @@ class CacheClearSiteStaticCommand extends Command
         } else {
             $output->write(
                 renderToString(
-                    div('Failure: Site static cache directory ' . $configPath . ' doesn\'t exist.', 
-                        'bg-danger px-2 py-1')
+                    div('Site static cache directory ' . $configPath . ' doesn\'t exist.', 
+                        'color-danger px-2 py-1')
                 )
             );
             $result = Command::FAILURE;

@@ -36,6 +36,8 @@ class SiteGenerateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $elapsedTimeStartPoint = microtime(true);
+
         $sitePath = $input->getOption('site-path') ? $input->getOption('site-path') : registry()->get('plugins.site.settings.static.site_path');
 
         $staticSitePath = ROOT_DIR . '/' . $sitePath;
@@ -54,8 +56,6 @@ class SiteGenerateCommand extends Command
         $items = [];
 
         $site = new Site();
-
-        $elapsedTimeStartPoint = microtime(true);
 
         $entries = entries()->fetch('', ['collection' => true, 'find' => ['depth' => '> 0']])
                             ->sortBy('modified_at', 'asc')
