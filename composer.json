@@ -3,13 +3,13 @@
     "type": "project",
     "description": "Site plugin to display entries content on the website frontend.",
     "keywords": ["site", "plugin", "flextype", "php", "html"],
-    "homepage": "https://github.com/flextype-plugins/site",
+    "homepage": "https://awilum.github.io/flextype/downloads/extend/plugins/site",
     "license": "MIT",
     "authors": [
         {
             "name": "Sergey Romanenko",
             "email": "awilum@msn.com",
-            "homepage": "https://awilum.github.io/flextype"
+            "homepage": "https://awilum.github.io"
         }
     ],
     "support": {
