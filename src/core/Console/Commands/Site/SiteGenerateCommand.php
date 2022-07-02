@@ -31,17 +31,15 @@ class SiteGenerateCommand extends Command
         $this->setName('site:generate');
         $this->setDescription('Generate site.');
         $this->addOption('site-path', null, InputOption::VALUE_REQUIRED, 'Destination for generated static site files (without trailing and without starting slash)');
-        $this->addOption('site-url', null, InputOption::VALUE_REQUIRED, 'Site url (without trailing slash).');
+        $this->addOption('site-url', null, InputOption::VALUE_REQUIRED, 'Site url (without trailing).');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if ($input->getOption('site-path')) {
-            $staticSitePath = ROOT_DIR . '/' . $input->getOption('site-path');
-        } else {
-            $staticSitePath = ROOT_DIR . '/' . registry()->get('plugins.site.settings.static.site_path');
-        }
+        $sitePath = $input->getOption('site-path') ? $input->getOption('site-path') : registry()->get('plugins.site.settings.static.site_path');
 
+        $staticSitePath = ROOT_DIR . '/' . $sitePath;
+        
         if ($input->getOption('site-url')) {
             registry()->set('flextype.settings.base_url', $input->getOption('site-url'));
             registry()->set('flextype.settings.base_path', '');
@@ -115,7 +113,7 @@ class SiteGenerateCommand extends Command
             
             $output->write(
                 renderToString(
-                    div('[b]Success[/b]: Cache cleared successfully.', 
+                    div('Cache cleared successfully.', 
                         'color-success px-2')
                 )
             );    
@@ -132,7 +130,7 @@ class SiteGenerateCommand extends Command
         if (! filesystem()->directory($staticSitePath)->exists()) {
             $output->write(
                 renderToString(
-                    div('[b]Failure[/b]: Static site folder "' . $staticSitePathMessage . '" wasn\'t created.', 
+                    div('Static site folder "' . $staticSitePathMessage . '" wasn\'t created.', 
                         'color-danger px-2 pb-2')
                 )
             );
@@ -143,7 +141,7 @@ class SiteGenerateCommand extends Command
         // proceed..
         $output->write(
             renderToString(
-                div('[b]Success[/b]: Static site folder "' . $staticSitePathMessage . '" created successfully.', 
+                div('Static site folder "' . $staticSitePathMessage . '" created successfully.', 
                     'color-success px-2')
             )
         );
@@ -157,7 +155,7 @@ class SiteGenerateCommand extends Command
             if (! filesystem()->directory($staticSitePath . '/' . $page['id'])->exists()) {
                 $output->write(
                     renderToString(
-                        div('[b]Failure[/b]: Static site page folder "' . $staticSitePathMessage . '/' . $page['id'] . '" wasn\'t created.', 
+                        div('Static site page folder "' . $staticSitePathMessage . '/' . $page['id'] . '" wasn\'t created.', 
                             'color-danger px-2 pb-1')
                     )
                 );
@@ -173,7 +171,7 @@ class SiteGenerateCommand extends Command
             if (! filesystem()->file($staticSitePath . '/' . $page['id'])->exists()) {
                 $output->write(
                     renderToString(
-                        div('[b]Failure[/b]: Page "' . $page['title'] . '" wasn\'t created.', 
+                        div('Page "' . $page['title'] . '" wasn\'t created.', 
                             'color-danger px-2 pb-1')
                     )
                 );
@@ -183,7 +181,7 @@ class SiteGenerateCommand extends Command
 
             $output->write(
                 renderToString(
-                    div('[b]Success[/b]: Page "' . $page['title'] . '" created successfully.', 
+                    div('Page "' . $page['title'] . '" in ' . $sitePath . '/' . $page['id'] . ' created successfully.', 
                         ' color-success px-2')
                 )
             );
@@ -195,7 +193,7 @@ class SiteGenerateCommand extends Command
         if (! filesystem()->file($staticSitePath . '/index.html')->exists()) {
             $output->write(
                 renderToString(
-                    div('[b]Failure[/b]: Home page wasn\'t created.', 
+                    div('Home page wasn\'t created.', 
                         'color-danger px-2 pb-1')
                 )
             );
@@ -205,7 +203,7 @@ class SiteGenerateCommand extends Command
 
         $output->write(
             renderToString(
-                div('[b]Success[/b]: Home page created successfully.', 
+                div('Home page in ' . $sitePath . ' created successfully.', 
                     ' color-success px-2')
             )
         );
@@ -228,7 +226,7 @@ class SiteGenerateCommand extends Command
             if (! filesystem()->directory($staticSitePath . '/' . PROJECT_NAME . '/assets/')->exists()) {
                 $output->write(
                     renderToString(
-                        div('[b]Failure[/b]: Assets wasn\'t created.', 
+                        div('Assets wasn\'t created.', 
                             'color-danger px-2 pb-1')
                     )
                 );
@@ -238,8 +236,8 @@ class SiteGenerateCommand extends Command
 
             $output->write(
                 renderToString(
-                    div('[b]Success[/b]: Assets created successfully.', 
-                        ' color-success px-2')
+                    div('Assets in ' . $sitePath . ' created successfully.', 
+                        'color-success px-2')
                 )
             );
         }
