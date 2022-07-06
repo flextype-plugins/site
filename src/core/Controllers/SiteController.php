@@ -19,6 +19,9 @@ use Slim\Http\Uri;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use function ltrim;
+use function Flextype\registry;
+use function Flextype\entries;
+use function Flextype\serializers;
 
 class SiteController
 {
@@ -72,7 +75,7 @@ class SiteController
         $template = isset($entry['template']) ? $entry['template'] : registry()->get('plugins.site.settings.templates.default');
                 
         // Check template file
-        if (! file_exists(PATH_PROJECT . '/' . registry()->get('plugins.site.settings.templates.directory') . '/' . $template . '.' . registry()->get('plugins.site.settings.templates.extension'))) {
+        if (! file_exists(FLEXTYPE_PATH_PROJECT . '/' . registry()->get('plugins.site.settings.templates.directory') . '/' . $template . '.' . registry()->get('plugins.site.settings.templates.extension'))) {
             $response->getBody()->write("Template {$template} not found");
             $response = $response->withStatus(404);
             return $response;

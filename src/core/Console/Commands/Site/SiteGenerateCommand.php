@@ -23,6 +23,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use function Thermage\div;
 use function Thermage\renderToString;
+use function Flextype\registry;
+use function Flextype\entries;
+use function Flextype\emitter;
 
 class SiteGenerateCommand extends Command
 {
@@ -40,7 +43,7 @@ class SiteGenerateCommand extends Command
 
         $sitePath = $input->getOption('site-path') ? $input->getOption('site-path') : registry()->get('plugins.site.settings.static.site_path');
 
-        $staticSitePath = ROOT_DIR . '/' . $sitePath;
+        $staticSitePath = FLEXTYPE_ROOT_DIR . '/' . $sitePath;
         
         if ($input->getOption('site-url')) {
             registry()->set('flextype.settings.base_url', $input->getOption('site-url'));
@@ -108,8 +111,8 @@ class SiteGenerateCommand extends Command
         );
 
         // Clear cache.
-        if (filesystem()->directory(PATH_TMP)->exists()) {
-            filesystem()->directory(PATH_TMP)->delete();
+        if (filesystem()->directory(FLEXTYPE_PATH_TMP)->exists()) {
+            filesystem()->directory(FLEXTYPE_PATH_TMP)->delete();
             
             $output->write(
                 renderToString(
@@ -209,21 +212,21 @@ class SiteGenerateCommand extends Command
         );
 
         // Proceed assets.
-        if (filesystem()->directory(PATH_PROJECT . '/assets')->exists()) {
-            filesystem()->directory($staticSitePath . '/' . PROJECT_NAME . '/assets')->ensureExists(0755, true);
+        if (filesystem()->directory(FLEXTYPE_PATH_PROJECT . '/assets')->exists()) {
+            filesystem()->directory($staticSitePath . '/' . FLEXTYPE_PROJECT_NAME . '/assets')->ensureExists(0755, true);
             
             $directories = [];
-            foreach (filesystem()->directory(PATH_PROJECT . '/assets')->directories() as $directory) {
-                $directories[] = strings($directory)->replace(PATH_PROJECT . '/assets/', '')->toString();
+            foreach (filesystem()->directory(FLEXTYPE_PATH_PROJECT . '/assets')->directories() as $directory) {
+                $directories[] = strings($directory)->replace(FLEXTYPE_PATH_PROJECT . '/assets/', '')->toString();
             }
             
             foreach ($directories as $directory) {
-                filesystem()->directory(PATH_PROJECT . '/assets/' . $directory)->copy($staticSitePath . '/' . PROJECT_NAME . '/assets/' . $directory);            
+                filesystem()->directory(FLEXTYPE_PATH_PROJECT . '/assets/' . $directory)->copy($staticSitePath . '/' . FLEXTYPE_PROJECT_NAME . '/assets/' . $directory);            
             }
 
-            filesystem()->file($staticSitePath . '/' . PROJECT_NAME . '/index.html')->put('');
+            filesystem()->file($staticSitePath . '/' . FLEXTYPE_PROJECT_NAME . '/index.html')->put('');
 
-            if (! filesystem()->directory($staticSitePath . '/' . PROJECT_NAME . '/assets/')->exists()) {
+            if (! filesystem()->directory($staticSitePath . '/' . FLEXTYPE_PROJECT_NAME . '/assets/')->exists()) {
                 $output->write(
                     renderToString(
                         div('Assets wasn\'t created.', 

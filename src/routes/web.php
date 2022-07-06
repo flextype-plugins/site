@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 use Flextype\Plugin\Site\Controllers\SiteController;
 use Flextype\Middlewares\CsrfMiddleware;
+use function Flextype\app;
+use function Flextype\emitter;
 
 emitter()->addListener('onFlextypeBeforeRun', static function (): void {    
     app()->get('{uri:.+}', [SiteController::class, 'index'])

@@ -22,6 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use function Thermage\div;
 use function Thermage\renderToString;
+use function Glowy\Filesystem\filesystem;
 
 class CacheClearSiteStaticCommand extends Command
 {
@@ -33,7 +34,7 @@ class CacheClearSiteStaticCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $configPath = PATH_TMP . '/site';
+        $configPath = FLEXTYPE_PATH_TMP . '/site';
 
         if (filesystem()->directory($configPath)->exists()) {
             if (filesystem()->directory($configPath)->delete()) {

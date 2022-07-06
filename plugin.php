@@ -17,7 +17,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Middlewares\TrailingSlash;
 use function is_file;
-
+use function Glowy\Strings\strings;
+use function Flextype\console;
+use function Flextype\app;
+use function Flextype\registry;
+use function Flextype\urlFor;
+use function Flextype\getBasePath;
+use function Flextype\getUriString;
 /**
  * Ensure vendor libraries exist
  */

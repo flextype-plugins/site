@@ -2,6 +2,10 @@
 
 namespace Flextype\Plugin\Site;
 
+use function Flextype\registry;
+use function Glowy\View\view;
+use Glowy\View\View;
+
 class Site {
     /**
      * Fetch.
@@ -40,15 +44,15 @@ class Site {
     public function render(array $data) 
     {
         if (registry()->get('plugins.site.settings.cache.enabled')) {
-            filesystem()->directory(PATH_TMP . '/site/')->ensureExists(0755, true);
+            filesystem()->directory(FLEXTYPE_PATH_TMP . '/site/')->ensureExists(0755, true);
 
-            $cacheFileID = PATH_TMP . '/site/' . $this->getCacheID($data['id']) . '.html';
+            $cacheFileID = FLEXTYPE_PATH_TMP . '/site/' . $this->getCacheID($data['id']) . '.html';
 
             if (filesystem()->file($cacheFileID)->exists()) {
-                $renderedTemplate = filesystem()->file(PATH_TMP . '/site/' . $this->getCacheID($data['id']) . '.html')->get();
+                $renderedTemplate = filesystem()->file(FLEXTYPE_PATH_TMP . '/site/' . $this->getCacheID($data['id']) . '.html')->get();
             } else {
                 $renderedTemplate = $this->fetch($data);
-                filesystem()->file(PATH_TMP . '/site/' . $this->getCacheID($data['id']) . '.html')->put($renderedTemplate);
+                filesystem()->file(FLEXTYPE_PATH_TMP . '/site/' . $this->getCacheID($data['id']) . '.html')->put($renderedTemplate);
             }
             
         } else {
