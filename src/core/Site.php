@@ -5,6 +5,9 @@ namespace Flextype\Plugin\Site;
 use function Flextype\registry;
 use function Glowy\View\view;
 use Glowy\View\View;
+use function Glowy\Filesystem\filesystem;
+use function Glowy\Strings\strings;
+use function Flextype\Plugin\Twig\twig; 
 
 class Site {
     /**

@@ -26,6 +26,8 @@ use function Thermage\renderToString;
 use function Flextype\registry;
 use function Flextype\entries;
 use function Flextype\emitter;
+use function Glowy\Filesystem\filesystem;
+use function Glowy\Strings\strings;
 
 class SiteGenerateCommand extends Command
 {
