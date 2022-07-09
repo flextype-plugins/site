@@ -18,7 +18,8 @@
     "require": {
         "php": "^8.1",
         "ext-json": "*",
-        "middlewares/trailing-slash": "^2.0.1"
+        "middlewares/trailing-slash": "^2.0.1",
+        "voku/html-min": "^4.5"
     },
     "config": {
         "apcu-autoloader": true,
