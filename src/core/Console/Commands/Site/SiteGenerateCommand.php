@@ -35,7 +35,7 @@ class SiteGenerateCommand extends Command
     {
         $this->setName('site:generate');
         $this->setDescription('Generate site.');
-        $this->addOption('site-path', null, InputOption::VALUE_REQUIRED, 'Destination for generated static site files (without trailing and without starting slash)');
+        $this->addOption('path', null, InputOption::VALUE_REQUIRED, 'Destination for generated static site files (without trailing and without starting slash)');
         $this->addOption('site-url', null, InputOption::VALUE_REQUIRED, 'Site url (without trailing).');
     }
 
@@ -43,7 +43,7 @@ class SiteGenerateCommand extends Command
     {
         $elapsedTimeStartPoint = microtime(true);
 
-        $sitePath = $input->getOption('site-path') ? $input->getOption('site-path') : registry()->get('plugins.site.settings.static.site_path');
+        $sitePath = $input->getOption('path') ? $input->getOption('path') : registry()->get('plugins.site.settings.static.path');
 
         $staticSitePath = FLEXTYPE_ROOT_DIR . '/' . $sitePath;
         
@@ -55,7 +55,7 @@ class SiteGenerateCommand extends Command
             registry()->set('flextype.settings.base_path', '');
         }
 
-        $staticSitePathMessage = registry()->get('plugins.site.settings.static.site_path');
+        $staticSitePathMessage = registry()->get('plugins.site.settings.static.path');
 
         // Site items.
         $items = [];

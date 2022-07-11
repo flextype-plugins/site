@@ -1,3 +1,10 @@
+<a name="2.0.1"></a>
+# [2.0.1](https://github.com/flextype-plugins/site/compare/v2.0.0...v2.0.1) (2021-07-11)
+
+### Bug Fixes
+
+* **console** Fix settings naming for static site generation.
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/flextype-plugins/site/compare/v1.11.0...v2.0.0) (2021-07-11)
 
