@@ -99,7 +99,7 @@ class SiteGenerateCommand extends Command
         }
 
         // Set entry to the SitemapController class property $sitemap
-        registry()->set('plugins.site.static.entries', $items);
+        registry()->set('plugins.site.settings.static.entries', $items);
 
         // Run event onSitemapAfterInitialized
         emitter()->emit('onStaticSiteAfterInitialized');
@@ -152,7 +152,7 @@ class SiteGenerateCommand extends Command
         );
         
         // Iterate through the pages.
-        foreach(registry()->get('plugins.site.static.entries') as $page) {
+        foreach(registry()->get('plugins.site.settings.static.entries') as $page) {
 
             // Create page folder.
             filesystem()->directory($staticSitePath . '/' . $page['id'])->ensureExists(0755, true);
@@ -223,6 +223,10 @@ class SiteGenerateCommand extends Command
             }
             
             foreach ($directories as $directory) {
+                if (in_array($directory, registry()->get('plugins.site.settings.static.ignore.assets'))) {
+                    continue;
+                }
+
                 filesystem()->directory(FLEXTYPE_PATH_PROJECT . '/assets/' . $directory)->copy($staticSitePath . '/' . FLEXTYPE_PROJECT_NAME . '/assets/' . $directory);            
             }
 
