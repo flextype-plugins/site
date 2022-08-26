@@ -55,7 +55,7 @@ class SiteGenerateCommand extends Command
             registry()->set('flextype.settings.base_path', '');
         }
 
-        $staticSitePathMessage = registry()->get('plugins.site.settings.static.path');
+        $staticSitePathMessage = $sitePath;
 
         // Site items.
         $items = [];
