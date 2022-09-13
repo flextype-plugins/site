@@ -1,7 +1,7 @@
 <h1 align="center">Site Plugin for <a href="https://awilum.github.io/flextype">Flextype</a></h1>
 
 <p align="center">
-<img src="https://img.shields.io/badge/license-MIT-blue.svg?label=License" alt="License MIT"> <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/flextype-plugins/site?label=Stars"> <img alt="GitHub forks" src="https://img.shields.io/github/forks/flextype-plugins/site?label=Forks"> <a href="https://hitsofcode.com"><img alt="Hits of Code" src="https://hitsofcode.com/github/flextype-plugins/site?branch=2.x"></a> <a href="https://discord.gg/ewQkqgfBAc"><img src="https://img.shields.io/discord/423097982498635778.svg?logo=discord&label=Discord%20Chat" alt="Discord"></a>
+<img src="https://img.shields.io/badge/license-MIT-blue.svg?label=License" alt="License MIT"> <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/flextype-plugins/site?label=Stars"> <img alt="GitHub forks" src="https://img.shields.io/github/forks/flextype-plugins/site?label=Forks"> <a href="https://hitsofcode.com"><img alt="Hits of Code" src="https://hitsofcode.com/github/flextype-plugins/site?branch=2.x"></a>
 </p>
 
 Site plugin to display entries content on the website frontend.
