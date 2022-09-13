@@ -12,10 +12,10 @@ The following dependencies need to be downloaded and installed for Site Plugin.
 
 | Item | Version | Download |
 |---|---|---|
-| [flextype](https://github.com/flextype/flextype) | ^1.0.0-alpha.1 | [download](https://github.com/flextype/flextype/releases) |
-| [twig](https://github.com/flextype-plugins/twig) | ^3.0.0 | [download](https://github.com/flextype-plugins/twig/releases) |
+| [flextype](https://github.com/flextype/flextype) | ^1.0.0-alpha.2 | [download](https://github.com/flextype/flextype/releases) |
+| [twig](https://github.com/flextype-plugins/twig) | ^3.1.0 | [download](https://github.com/flextype-plugins/twig/releases) |
 
-* twig plugin is optional dependency.
+* [twig](https://github.com/flextype-plugins/twig) plugin is optional dependency.
 
 ## Installation
 
