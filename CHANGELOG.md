@@ -1,3 +1,10 @@
+<a name="2.1.1"></a>
+# [2.1.1](https://github.com/flextype-plugins/site/compare/v2.1.0...v2.1.1) (2022-09-14)
+
+### Bug Fixes
+
+* **site** fix issue with empty null cache id for error404 page.
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/flextype-plugins/site/compare/v2.0.3...v2.1.0) (2022-09-13)
 
