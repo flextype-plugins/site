@@ -47,16 +47,25 @@ class Site {
      */
     public function render(array $data) 
     {
+        if (isset($data['id'])) {
+            $dataID = $data['id'];
+        } else {
+            $dataID = strings($data['title'] . 
+                              $data['description'] .
+                              $data['content'] .
+                              $data['template'])->hash()->toString();
+        }
+
         if (registry()->get('plugins.site.settings.cache.enabled')) {
             filesystem()->directory(FLEXTYPE_PATH_TMP . '/site/')->ensureExists(0755, true);
 
-            $cacheFileID = FLEXTYPE_PATH_TMP . '/site/' . $this->getCacheID($data['id']) . '.html';
+            $cacheFileID = FLEXTYPE_PATH_TMP . '/site/' . $this->getCacheID($dataID) . '.html';
 
             if (filesystem()->file($cacheFileID)->exists()) {
-                $renderedTemplate = filesystem()->file(FLEXTYPE_PATH_TMP . '/site/' . $this->getCacheID($data['id']) . '.html')->get();
+                $renderedTemplate = filesystem()->file(FLEXTYPE_PATH_TMP . '/site/' . $this->getCacheID($dataID) . '.html')->get();
             } else {
                 $renderedTemplate = $this->fetch($data);
-                filesystem()->file(FLEXTYPE_PATH_TMP . '/site/' . $this->getCacheID($data['id']) . '.html')->put($renderedTemplate);
+                filesystem()->file(FLEXTYPE_PATH_TMP . '/site/' . $this->getCacheID($dataID) . '.html')->put($renderedTemplate);
             }
             
         } else {
